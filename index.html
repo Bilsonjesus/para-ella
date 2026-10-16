@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Para mi cachetona hermosa 🤎</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rosa: #ff5d8f;
+    --rosa-suave: #ffc2d6;
+    --fondo1: #2b0a2e;
+    --fondo2: #5a1a4a;
+    --texto: #fff4f8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Quicksand', sans-serif;
+    color: var(--texto);
+    background: linear-gradient(160deg, var(--fondo1), var(--fondo2));
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  h1, h2 { font-family: 'Dancing Script', cursive; font-weight: 600; }
+
+  /* Corazones cayendo */
+  #corazones { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .corazon {
+    position: absolute; top: -40px;
+    animation: caer linear forwards;
+    opacity: .8;
+  }
+  @keyframes caer {
+    to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* Pantalla de inicio */
+  #inicio {
+    position: fixed; inset: 0; z-index: 100;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: linear-gradient(160deg, var(--fondo1), var(--fondo2));
+    text-align: center; padding: 24px;
+    transition: opacity 1s ease, visibility 1s;
+  }
+  #inicio.oculto { opacity: 0; visibility: hidden; }
+  #inicio .latido { font-size: 80px; animation: latido 1.2s infinite; cursor: pointer; }
+  #inicio p { margin-top: 18px; font-size: 1.1rem; color: var(--rosa-suave); }
+  @keyframes latido {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.25); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.15); }
+  }
+
+  section {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 60px 24px; text-align: center;
+  }
+  .aparece { opacity: 0; transform: translateY(30px); transition: opacity 1.2s ease, transform 1.2s ease; }
+  .aparece.visible { opacity: 1; transform: none; }
+
+  /* Mensaje */
+  #titulo { font-size: clamp(2.6rem, 9vw, 4.5rem); color: var(--rosa-suave); margin-bottom: 28px; text-shadow: 0 0 20px rgba(255,93,143,.6); }
+  #mensaje { max-width: 560px; font-size: clamp(1.05rem, 3.6vw, 1.35rem); line-height: 1.8; min-height: 200px; }
+  #mensaje p { margin-bottom: 14px; }
+  .cursor::after { content: '|'; animation: parpadeo 1s infinite; color: var(--rosa); }
+  @keyframes parpadeo { 50% { opacity: 0; } }
+  #bajar { margin-top: 30px; font-size: 2rem; opacity: 0; transition: opacity 1s; animation: rebote 1.6s infinite; text-decoration: none; color: var(--rosa); }
+  #bajar.visible { opacity: 1; }
+  @keyframes rebote { 50% { transform: translateY(10px); } }
+
+  /* Contador */
+  #contador h2 { font-size: clamp(2rem, 7vw, 3rem); color: var(--rosa-suave); margin-bottom: 28px; }
+  .tiempo { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .caja {
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,194,214,.3);
+    border-radius: 18px; padding: 18px 14px; min-width: 76px;
+    backdrop-filter: blur(6px);
+  }
+  .caja b { display: block; font-size: 2rem; color: var(--rosa); }
+  .caja span { font-size: .8rem; text-transform: uppercase; letter-spacing: 1px; }
+  #contador .nota { margin-top: 24px; max-width: 420px; line-height: 1.6; opacity: .9; }
+
+  /* Galería */
+  #galeria h2 { font-size: clamp(2rem, 7vw, 3rem); color: var(--rosa-suave); margin-bottom: 28px; }
+  .fotos { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; max-width: 760px; width: 100%; }
+  .foto {
+    aspect-ratio: 3/4; border-radius: 16px; overflow: hidden;
+    background: rgba(255,255,255,.08); border: 3px solid #fff;
+    box-shadow: 0 10px 30px rgba(0,0,0,.4);
+    display: flex; align-items: center; justify-content: center; font-size: 3rem;
+  }
+  .foto:nth-child(odd) { transform: rotate(-2deg); }
+  .foto:nth-child(even) { transform: rotate(2deg); }
+  .foto img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* Pregunta final */
+  #final h2 { font-size: clamp(2rem, 7vw, 3.4rem); color: var(--rosa-suave); margin-bottom: 34px; max-width: 600px; line-height: 1.3; }
+  .botones { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; min-height: 60px; }
+  button {
+    font-family: inherit; font-size: 1.2rem; font-weight: 600;
+    border: none; border-radius: 40px; padding: 14px 34px; cursor: pointer;
+    transition: transform .2s;
+  }
+  button:hover { transform: scale(1.08); }
+  #si { background: var(--rosa); color: #fff; box-shadow: 0 0 25px rgba(255,93,143,.7); }
+  #no { background: #fff; color: #555; }
+  #respuesta { margin-top: 34px; font-size: 1.3rem; line-height: 1.7; max-width: 520px; display: none; }
+  #respuesta .firma { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--rosa-suave); margin-top: 16px; display: block; }
+  #pie { margin-top: 50px; opacity: .6; font-size: .9rem; }
+</style>
+</head>
+<body>
+
+<div id="corazones"></div>
+
+<div id="inicio">
+  <div class="latido" id="abrir">🤎</div>
+  <p>Toca el corazón, hay algo para ti…</p>
+</div>
+
+<section id="mensaje-sec">
+  <h1 id="titulo" class="aparece"></h1>
+  <div id="mensaje"></div>
+  <a id="bajar" href="#contador">↓</a>
+</section>
+
+<section id="contador" class="aparece">
+  <h2>Nuestro tiempo juntos</h2>
+  <div class="tiempo">
+    <div class="caja"><b id="t-dias">0</b><span>días</span></div>
+    <div class="caja"><b id="t-horas">0</b><span>horas</span></div>
+    <div class="caja"><b id="t-min">0</b><span>minutos</span></div>
+    <div class="caja"><b id="t-seg">0</b><span>segundos</span></div>
+  </div>
+  <p class="nota" id="nota-contador"></p>
+</section>
+
+<section id="galeria" class="aparece">
+  <h2>Nuestros recuerdos</h2>
+  <div class="fotos" id="fotos"></div>
+</section>
+
+<section id="final" class="aparece">
+  <h2 id="pregunta"></h2>
+  <div class="botones">
+    <button id="si">Sí 💖</button>
+    <button id="no">No</button>
+  </div>
+  <div id="respuesta"></div>
+  <div id="pie">Hecho con todo mi amor 🤎</div>
+</section>
+
+<audio id="musica" loop></audio>
+
+<script>
+/* ============================================================
+   ✏️ PERSONALIZA AQUÍ: cambia solo esta parte
+   ============================================================ */
+const CONFIG = {
+  titulo: "Para ti, mi cachetona hermosa",
+
+  // Fecha en que empezaron (año-mes-día)
+  fechaInicio: "2026-09-05T00:00:00",
+
+  notaContador: "Cada segundo a tu lado es mi favorito.",
+
+  // Cada texto aparece como un párrafo que se escribe solo
+  mensajes: [
+    "Hola, mi cachetona hermosa, mi pedacito de cielo. 🤎🥹",
+    "Hoy quise regalarte algo diferente, algo que no naciera de mis manos, sino de lo más profundo de mi corazón, porque hay sentimientos tan bonitos que las palabras se quedan pequeñas para describirlos.",
+    "Desde aquel 5 de septiembre, mi vida comenzó a tener otro color, otro brillo y una razón más para sonreír. Llegaste tú, y sin darte cuenta, empezaste a convertir mis días sencillos en momentos especiales, mis pensamientos en ilusiones y mi corazón en un lugar donde tu nombre siempre tiene un espacio reservado.",
+    "Cuando me dices “chocolatico”, mi amor, no te imaginas la ternura que despiertas en mí. Es increíble cómo una palabra tan pequeñita, dicha por esos labios tan hermosos, puede hacerme sentir tantas cosas bonitas. Si supieras cuántas veces me sacas una sonrisa sin siquiera intentarlo, entenderías por qué me gustas tanto hasta en los detalles más pequeños.",
+    "Y si algún día alguien me preguntara quién es el amor más grande del planeta, no tendría que mirar al cielo, recorrer el mundo ni buscar entre millones de personas. Simplemente pensaría en ti, en tu carita hermosa, en tu sonrisa, en tu manera de ser y en esa magia tan tuya que hace que mi corazón te elija una y otra vez.",
+    "Porque, entre tantas personas que existen en este mundo, qué bonito ha sido coincidir contigo. Qué bonito es tener a alguien que, sin necesidad de hacer cosas extraordinarias, puede convertir un instante cualquiera en un recuerdo que quisiera guardar para siempre.",
+    "Mi cachetona preciosa, si pudiera pedirle algo a la vida, sería que nunca te falten motivos para sonreír, que tus ojitos siempre tengan razones para brillar y que, incluso en tus días más difíciles, nunca olvides lo maravillosa que eres. Y si algún día el mundo se te hace pesado, quisiera ser ese abrazo en el que puedas descansar, esa voz que te recuerde cuánto vales y ese corazón que te haga sentir querida de verdad.",
+    "Te amo muchísimo, mi vida. Más de lo que a veces consigo explicarte, más de lo que cabe en un mensaje y de una manera que solo mi corazón sabe sentir. Gracias por llegar a mi vida y hacerla un poquito más bonita con tu existencia.",
+    "Te mando un besito enorme, mi cachetona hermosa. 🤎🫶🏻",
+    "Con muchísimo amor, tu chocolatico. 🍫❤️"
+  ],
+
+  // Pon tus fotos en una carpeta "fotos" junto a este archivo
+  // Ejemplo: ["fotos/1.jpg", "fotos/2.jpg", "fotos/3.jpg"]
+  fotos: ["fotos/1.jpg", "fotos/2.jpg", "fotos/3.jpg", "fotos/4.jpg", "fotos/5.jpg"],
+
+  // Pon tu canción como "musica.mp3" junto a este archivo ("" si no quieres música)
+  musica: "musica.mp3",
+
+  pregunta: "Mi cachetona hermosa, ¿quieres seguir siendo mi persona favorita?",
+
+  respuestaSi: "Sabía que dirías que sí. Me haces el chocolatico más feliz del mundo. 💖",
+
+  firma: "Tu chocolatico 🍫"
+};
+/* ============================================================ */
+
+const $ = id => document.getElementById(id);
+
+// Corazones cayendo
+const emojis = ["🤎", "💖", "💗", "🌸", "✨", "💕"];
+function nuevoCorazon() {
+  const c = document.createElement("div");
+  c.className = "corazon";
+  c.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+  c.style.left = Math.random() * 100 + "vw";
+  c.style.fontSize = (14 + Math.random() * 22) + "px";
+  c.style.animationDuration = (6 + Math.random() * 6) + "s";
+  $("corazones").appendChild(c);
+  setTimeout(() => c.remove(), 12000);
+}
+setInterval(nuevoCorazon, 450);
+
+// Escribir letra por letra
+function escribir(el, texto, vel = 20) {
+  return new Promise(res => {
+    let i = 0;
+    el.classList.add("cursor");
+    const t = setInterval(() => {
+      el.textContent += texto[i++];
+      if (i >= texto.length) { clearInterval(t); el.classList.remove("cursor"); res(); }
+    }, vel);
+  });
+}
+const pausa = ms => new Promise(r => setTimeout(r, ms));
+
+async function iniciarMensaje() {
+  const tit = $("titulo");
+  tit.textContent = CONFIG.titulo;
+  tit.classList.add("visible");
+  await pausa(1200);
+  for (const texto of CONFIG.mensajes) {
+    const p = document.createElement("p");
+    $("mensaje").appendChild(p);
+    p.scrollIntoView({ behavior: "smooth", block: "center" });
+    await escribir(p, texto);
+    await pausa(600);
+  }
+  $("bajar").classList.add("visible");
+}
+
+// Contador
+function actualizarContador() {
+  const diff = Math.max(0, Date.now() - new Date(CONFIG.fechaInicio).getTime());
+  const s = Math.floor(diff / 1000);
+  $("t-dias").textContent = Math.floor(s / 86400);
+  $("t-horas").textContent = Math.floor(s % 86400 / 3600);
+  $("t-min").textContent = Math.floor(s % 3600 / 60);
+  $("t-seg").textContent = s % 60;
+}
+setInterval(actualizarContador, 1000);
+actualizarContador();
+$("nota-contador").textContent = CONFIG.notaContador;
+
+// Galería
+const contFotos = $("fotos");
+if (CONFIG.fotos.length) {
+  CONFIG.fotos.forEach(src => {
+    const d = document.createElement("div");
+    d.className = "foto";
+    d.innerHTML = `<img src="${src}" alt="Recuerdo">`;
+    contFotos.appendChild(d);
+  });
+} else {
+  for (let i = 0; i < 6; i++) {
+    const d = document.createElement("div");
+    d.className = "foto";
+    d.textContent = "🤎";
+    contFotos.appendChild(d);
+  }
+}
+
+// Aparecer al hacer scroll
+const obs = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+}, { threshold: 0.25 });
+document.querySelectorAll(".aparece").forEach(el => obs.observe(el));
+
+// Pregunta final
+$("pregunta").textContent = CONFIG.pregunta;
+
+const no = $("no");
+function huir() {
+  no.style.position = "fixed";
+  no.style.left = Math.random() * (innerWidth - no.offsetWidth - 20) + 10 + "px";
+  no.style.top = Math.random() * (innerHeight - no.offsetHeight - 20) + 10 + "px";
+}
+no.addEventListener("mouseenter", huir);
+no.addEventListener("touchstart", e => { e.preventDefault(); huir(); });
+no.addEventListener("click", huir);
+
+$("si").addEventListener("click", () => {
+  no.style.display = "none";
+  $("si").style.display = "none";
+  const r = $("respuesta");
+  r.style.display = "block";
+  r.innerHTML = `${CONFIG.respuestaSi}<span class="firma">${CONFIG.firma}</span>`;
+  for (let i = 0; i < 80; i++) setTimeout(nuevoCorazon, i * 40);
+});
+
+// Abrir y arrancar
+$("abrir").addEventListener("click", () => {
+  $("inicio").classList.add("oculto");
+  if (CONFIG.musica) {
+    const a = $("musica");
+    a.src = CONFIG.musica;
+    a.volume = 0.6;
+    a.play().catch(() => {});
+  }
+  iniciarMensaje();
+});
+</script>
+</body>
+</html>
